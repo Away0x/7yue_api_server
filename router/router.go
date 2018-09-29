@@ -6,6 +6,10 @@ import (
 		"github.com/Away0x/7yue_api_server/handler/classic"
 	"github.com/Away0x/7yue_api_server/handler"
 	"github.com/Away0x/7yue_api_server/constant/errno"
+	"github.com/Away0x/7yue_api_server/handler/like"
+	"github.com/Away0x/7yue_api_server/handler/book"
+	"github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
 
 func Register(g *gin.Engine) *gin.Engine {
@@ -16,9 +20,13 @@ func Register(g *gin.Engine) *gin.Engine {
 	g.Use(middleware.KeyAuth)
 
 	// 注册路由
+	// 404
 	g.NoRoute(func(c *gin.Context) {
 		handler.SendResponse(c, errno.RouterError, nil)
 	})
+	// swagger
+	g.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	v1 := g.Group("/v1")
 	{
 		// 期刊
@@ -39,16 +47,34 @@ func Register(g *gin.Engine) *gin.Engine {
 		}
 
 		// 书籍
-		//bookRouter := v1.Group("/book")
-		//{
-		//
-		//}
+		bookRouter := v1.Group("/book")
+		{
+			// 获取热门书籍(概要)
+			bookRouter.GET("/hot_list", book.HotList)
+			// 获取书籍短评
+			bookRouter.GET("/short_comment/:book_id", book.ShortComment)
+			// 获取喜欢书籍数量
+			bookRouter.GET("/favor_count", book.FavorCount)
+			// 获取书籍点赞情况
+			bookRouter.GET("/favor/:book_id", book.FavorStatus)
+			// 新增短评
+			bookRouter.POST("/add/short_comment", book.AddShortComment)
+			// 获取热搜关键字
+			bookRouter.GET("/hot_keyword", book.HotKeyword)
+			// 书籍搜索
+			bookRouter.GET("/search", book.Search)
+			// 获取书籍详细信息
+			bookRouter.GET("/detail/:book_id", book.Detail)
+		}
 
 		// 点赞
-		//likeRouter := v1.Group("/like")
-		//{
-		//
-		//}
+		likeRouter := v1.Group("/like")
+		{
+			// 进行点赞
+			likeRouter.POST("", like.Like)
+			// 取消点赞
+			likeRouter.POST("/cancel", like.Cancel)
+		}
 	}
 
 

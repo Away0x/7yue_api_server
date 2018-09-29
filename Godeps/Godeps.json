@@ -4,6 +4,15 @@
 	"GodepVersion": "v80",
 	"Deps": [
 		{
+			"ImportPath": "github.com/PuerkitoBio/purell",
+			"Comment": "v1.1.0-10-g975f537",
+			"Rev": "975f53781597ed779763b7b65566e74c4004d8de"
+		},
+		{
+			"ImportPath": "github.com/PuerkitoBio/urlesc",
+			"Rev": "de5bf2ad457846296e2031421a34e2568e304e35"
+		},
+		{
 			"ImportPath": "github.com/gin-contrib/sse",
 			"Rev": "22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae"
 		},
@@ -28,6 +37,26 @@
 			"Rev": "ad53619b15fda20df57c16cf19fe83f4a428cefa"
 		},
 		{
+			"ImportPath": "github.com/go-openapi/jsonpointer",
+			"Comment": "0.16.0-1-g52eb3d4",
+			"Rev": "52eb3d4b47c6a51ce2693c8e614a15a07c1af435"
+		},
+		{
+			"ImportPath": "github.com/go-openapi/jsonreference",
+			"Comment": "0.16.0-1-g1c6a3fa",
+			"Rev": "1c6a3fa339f2743b7b0fd2b842fc455eca2fa9eb"
+		},
+		{
+			"ImportPath": "github.com/go-openapi/spec",
+			"Comment": "0.16.0-1-gf1468ac",
+			"Rev": "f1468acb3b29cdd5c5f6fa29435d2d2d6e6c9ff1"
+		},
+		{
+			"ImportPath": "github.com/go-openapi/swag",
+			"Comment": "0.16.0-9-gdd0dad0",
+			"Rev": "dd0dad036e67ae93c27dc64337b3f76296f3a5f0"
+		},
+		{
 			"ImportPath": "github.com/golang/protobuf/proto",
 			"Comment": "v1.2.0-18-g7716a98",
 			"Rev": "7716a980bceefe9a0213654823d9ea62d23b87a2"
@@ -36,6 +65,18 @@
 			"ImportPath": "github.com/json-iterator/go",
 			"Comment": "1.1.5-8-g2433035",
 			"Rev": "2433035e513208b0f7bd5b50d0aecd889b2c1ff8"
+		},
+		{
+			"ImportPath": "github.com/mailru/easyjson/buffer",
+			"Rev": "60711f1a8329503b04e1c88535f419d0bb440bff"
+		},
+		{
+			"ImportPath": "github.com/mailru/easyjson/jlexer",
+			"Rev": "60711f1a8329503b04e1c88535f419d0bb440bff"
+		},
+		{
+			"ImportPath": "github.com/mailru/easyjson/jwriter",
+			"Rev": "60711f1a8329503b04e1c88535f419d0bb440bff"
 		},
 		{
 			"ImportPath": "github.com/mattn/go-isatty",
@@ -53,13 +94,90 @@
 			"Rev": "94122c33edd36123c84d5368cfb2b69df93a0ec8"
 		},
 		{
+			"ImportPath": "github.com/pkg/errors",
+			"Comment": "v0.8.0-12-g816c908",
+			"Rev": "816c9085562cd7ee03e7f8188a1cfd942858cded"
+		},
+		{
+			"ImportPath": "github.com/swaggo/gin-swagger",
+			"Comment": "v1.0.0-2-g6192cec",
+			"Rev": "6192cec7d280666e22f169537b6b242a372efb13"
+		},
+		{
+			"ImportPath": "github.com/swaggo/gin-swagger/swaggerFiles",
+			"Comment": "v1.0.0-2-g6192cec",
+			"Rev": "6192cec7d280666e22f169537b6b242a372efb13"
+		},
+		{
+			"ImportPath": "github.com/swaggo/swag",
+			"Comment": "v.1.4.0-4-g73cbe85",
+			"Rev": "73cbe8577bda9be716e40f5ba03c5be4981cbd84"
+		},
+		{
 			"ImportPath": "github.com/ugorji/go/codec",
 			"Comment": "v1.1.1-25-g2c86ab7",
 			"Rev": "2c86ab75771cd005aba08da133ce0565a19c2587"
 		},
 		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "2f5d2388922f370f4355f327fcf4cfe9f5583908"
+		},
+		{
+			"ImportPath": "golang.org/x/net/idna",
+			"Rev": "2f5d2388922f370f4355f327fcf4cfe9f5583908"
+		},
+		{
+			"ImportPath": "golang.org/x/net/webdav",
+			"Rev": "2f5d2388922f370f4355f327fcf4cfe9f5583908"
+		},
+		{
+			"ImportPath": "golang.org/x/net/webdav/internal/xml",
+			"Rev": "2f5d2388922f370f4355f327fcf4cfe9f5583908"
+		},
+		{
 			"ImportPath": "golang.org/x/sys/unix",
 			"Rev": "90868a75fefd03942536221d7c0e2f84ec62a668"
+		},
+		{
+			"ImportPath": "golang.org/x/text/secure/bidirule",
+			"Comment": "v0.3.0-62-g905a571",
+			"Rev": "905a57155faa8230500121607930ebb9dd8e139c"
+		},
+		{
+			"ImportPath": "golang.org/x/text/transform",
+			"Comment": "v0.3.0-62-g905a571",
+			"Rev": "905a57155faa8230500121607930ebb9dd8e139c"
+		},
+		{
+			"ImportPath": "golang.org/x/text/unicode/bidi",
+			"Comment": "v0.3.0-62-g905a571",
+			"Rev": "905a57155faa8230500121607930ebb9dd8e139c"
+		},
+		{
+			"ImportPath": "golang.org/x/text/unicode/norm",
+			"Comment": "v0.3.0-62-g905a571",
+			"Rev": "905a57155faa8230500121607930ebb9dd8e139c"
+		},
+		{
+			"ImportPath": "golang.org/x/text/width",
+			"Comment": "v0.3.0-62-g905a571",
+			"Rev": "905a57155faa8230500121607930ebb9dd8e139c"
+		},
+		{
+			"ImportPath": "golang.org/x/tools/go/ast/astutil",
+			"Rev": "b3c0be4c978b9aca5acfec41ac043ed3914154a7"
+		},
+		{
+			"ImportPath": "golang.org/x/tools/go/buildutil",
+			"Rev": "b3c0be4c978b9aca5acfec41ac043ed3914154a7"
+		},
+		{
+			"ImportPath": "golang.org/x/tools/go/internal/cgo",
+			"Rev": "b3c0be4c978b9aca5acfec41ac043ed3914154a7"
+		},
+		{
+			"ImportPath": "golang.org/x/tools/go/loader",
+			"Rev": "b3c0be4c978b9aca5acfec41ac043ed3914154a7"
 		},
 		{
 			"ImportPath": "gopkg.in/go-playground/validator.v8",

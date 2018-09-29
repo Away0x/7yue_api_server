@@ -20,8 +20,14 @@ func Options(c *gin.Context) {
 	}
 }
 
-// key
+// appkey
+// header 携带的优先级更高
 func KeyAuth(c *gin.Context) {
+	if c.Request.URL.String() == "/swagger/index.html" {
+		c.Next()
+		return
+	}
+
 	key := c.Request.Header.Get("appkey")
 	if key == "" {
 		key = c.Query("appkey")
@@ -29,7 +35,7 @@ func KeyAuth(c *gin.Context) {
 
 	// 没有 key
 	if key != "abc" {
-		handler.SendResponse(c, errno.New(errno.AuthError, nil).Add("appkey 错误"), nil)
+		handler.SendResponse(c, errno.New(errno.AuthError, nil).Addf("appkey 错误 - %s", key), nil)
 		c.Abort()
 		return
 	}
