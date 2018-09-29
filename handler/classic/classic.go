@@ -9,24 +9,26 @@ import (
 
 // 获取最新一期
 func Latest(c *gin.Context) {
-	handler.SendResponse(c, errno.OK, nil)
+	// 1. 响应数据
+	handler.SendResponse(c, errno.OK, "ok")
 }
 
 // 获取当前一期的下一期
 func Next(c *gin.Context) {
-	// 参数验证
+	// 1. 参数验证
 	index, err := validate.NumberParamsValidate(c,"index")
 	if err != nil {
 		handler.SendResponse(c, err, nil)
 		return
 	}
 
-	handler.SendResponse(c, errno.OK, index)
+	// 2. 响应数据
+	handler.SendResponse(c, nil, index)
 }
 
 // 获取某一期详细信息
 func Detail(c *gin.Context) {
-	// 参数验证
+	// 1. 参数验证
 	_type, err := validate.ClassicTypeParamsValidate(c, "type")
 	if err != nil {
 		handler.SendResponse(c, err, nil)
@@ -38,6 +40,7 @@ func Detail(c *gin.Context) {
 		return
 	}
 
+	// 2. 响应数据
 	handler.SendResponse(c, nil, gin.H{
 		"type": _type,
 		"id": id,
@@ -46,19 +49,20 @@ func Detail(c *gin.Context) {
 
 //获取当前一期的上一期
 func Previous(c *gin.Context) {
-	// 参数验证
+	// 1. 参数验证
 	index, err := validate.NumberParamsValidate(c,"index")
 	if err != nil {
 		handler.SendResponse(c, err, nil)
 		return
 	}
 
-	handler.SendResponse(c, errno.OK, index)
+	// 2. 响应数据
+	handler.SendResponse(c, nil, index)
 }
 
 // 获取点赞信息
 func Like(c *gin.Context) {
-	// 参数验证
+	// 1. 参数验证
 	_type, err := validate.ClassicTypeParamsValidate(c, "type")
 	if err != nil {
 		handler.SendResponse(c, err, nil)
@@ -70,6 +74,7 @@ func Like(c *gin.Context) {
 		return
 	}
 
+	// 2. 响应数据
 	handler.SendResponse(c, nil, gin.H{
 		"type": _type,
 		"id": id,
@@ -78,5 +83,6 @@ func Like(c *gin.Context) {
 
 // 获取我喜欢的期刊
 func Favor(c *gin.Context) {
-	handler.SendResponse(c, errno.OK, nil)
+	// 1. 响应数据
+	handler.SendResponse(c, nil, "ok")
 }

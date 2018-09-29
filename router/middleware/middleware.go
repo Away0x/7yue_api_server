@@ -35,7 +35,7 @@ func KeyAuth(c *gin.Context) {
 
 	// 没有 key
 	if key != "abc" {
-		handler.SendResponse(c, errno.New(errno.AuthError, nil).Addf("appkey 错误 - %s", key), nil)
+		handler.SendResponse(c, errno.New(errno.AuthError, nil).Addf("appkey 错误 - %s (正确的 key 为 abc)", key), nil)
 		c.Abort()
 		return
 	}

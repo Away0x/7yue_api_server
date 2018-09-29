@@ -10,6 +10,9 @@ import (
 func main() {
 	g := gin.New()
 
+	//db := model.InitDB()
+	//defer db.Close()
+
 	router.Register(g)
 
 	log.Printf("Start to listening the incoming requests on http address: %s", ":8888")
