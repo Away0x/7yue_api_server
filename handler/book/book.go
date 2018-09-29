@@ -70,7 +70,7 @@ func Search(c *gin.Context) {
 	start := c.DefaultQuery("start", "0")     // 开始记录数，默认为 0
 	count := c.DefaultQuery("count", "20")    // 记录条数，默认为 20，超过依然按照 20 条计算
 	summary := c.DefaultQuery("summary", "0") // 返回完整或简介,默认为 0，0 为完整内容，1 为简介
-	q := c.Query("q")                                       // 搜索内容，比如你想搜索 python 相关书籍，则输入 python
+	q := c.Query("q")                                     // 搜索内容，比如你想搜索 python 相关书籍，则输入 python
 
 	// 2. 响应数据
 	handler.SendResponse(c, nil, gin.H{

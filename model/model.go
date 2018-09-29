@@ -9,10 +9,10 @@ import (
 var DB *gorm.DB
 
 func InitDB() *gorm.DB {
-	db, err := gorm.Open("sqlite3", "/db/sqlite.db")
+	db, err := gorm.Open("sqlite3", "db/sqlite.db")
 	if err != nil {
 		fmt.Println(err)
-		panic("connect postgres failed")
+		panic("connect sqlite failed")
 	}
 	db.LogMode(true)
 	DB = db
