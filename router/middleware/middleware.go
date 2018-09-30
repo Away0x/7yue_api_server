@@ -23,11 +23,6 @@ func Options(c *gin.Context) {
 // appkey
 // header 携带的优先级更高
 func KeyAuth(c *gin.Context) {
-	if c.Request.URL.String() == "/swagger/index.html" {
-		c.Next()
-		return
-	}
-
 	key := c.Request.Header.Get("appkey")
 	if key == "" {
 		key = c.Query("appkey")

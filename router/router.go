@@ -10,6 +10,7 @@ import (
 	"github.com/Away0x/7yue_api_server/handler/book"
 	"github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
+	"github.com/Away0x/7yue_api_server/handler/user"
 )
 
 func Register(g *gin.Engine) *gin.Engine {
@@ -17,7 +18,6 @@ func Register(g *gin.Engine) *gin.Engine {
 	g.Use(gin.Recovery())
 	g.Use(gin.Logger())
 	g.Use(middleware.Options)
-	g.Use(middleware.KeyAuth)
 
 	// 注册路由
 	// 404
@@ -27,10 +27,21 @@ func Register(g *gin.Engine) *gin.Engine {
 	// swagger
 	g.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
+	// index
+	g.GET("", user.Index)
+
 	v1 := g.Group("/v1")
 	{
+		// app key
+		userRoute := v1.Group("/user")
+		{
+			userRoute.GET("", user.List)
+			userRoute.POST("/register", user.Register)
+		}
+
 		// 期刊
 		classicRouter := v1.Group("/classic")
+		classicRouter.Use(middleware.KeyAuth)
 		{
 			// 获取最新一期
 			classicRouter.GET("/latest", classic.Latest)
@@ -48,6 +59,7 @@ func Register(g *gin.Engine) *gin.Engine {
 
 		// 书籍
 		bookRouter := v1.Group("/book")
+		classicRouter.Use(middleware.KeyAuth)
 		{
 			// 获取热门书籍(概要)
 			bookRouter.GET("/hot_list", book.HotList)
@@ -69,6 +81,7 @@ func Register(g *gin.Engine) *gin.Engine {
 
 		// 点赞
 		likeRouter := v1.Group("/like")
+		classicRouter.Use(middleware.KeyAuth)
 		{
 			// 进行点赞
 			likeRouter.POST("", like.Like)
