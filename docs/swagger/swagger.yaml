@@ -1,0 +1,27 @@
+info:
+  contact: {}
+  license: {}
+paths:
+  /user/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create a new user
+        in: body
+        name: user
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            $ref: '#/definitions/interface'
+            type: object
+      summary: 注册
+      tags:
+      - user
+swagger: "2.0"

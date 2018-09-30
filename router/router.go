@@ -1,9 +1,10 @@
 package router
 
 import (
+	_ "github.com/Away0x/7yue_api_server/docs"
 	"github.com/gin-gonic/gin"
 	"github.com/Away0x/7yue_api_server/router/middleware"
-		"github.com/Away0x/7yue_api_server/handler/classic"
+	"github.com/Away0x/7yue_api_server/handler/classic"
 	"github.com/Away0x/7yue_api_server/handler"
 	"github.com/Away0x/7yue_api_server/constant/errno"
 	"github.com/Away0x/7yue_api_server/handler/like"
