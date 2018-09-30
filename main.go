@@ -11,6 +11,7 @@ import (
 
 func main() {
 	g := gin.New()
+	g.Static("/static", "static")
 	g.LoadHTMLGlob("templates/*")
 
 	config.InitConfig()
