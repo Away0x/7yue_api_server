@@ -20,6 +20,21 @@ definitions:
     - art_id
     - type
     type: object
+  model.BookSerializer:
+    properties:
+      author:
+        type: string
+      fav_nums:
+        type: integer
+      id:
+        type: integer
+      image:
+        type: string
+      like_status:
+        type: integer
+      title:
+        type: string
+    type: object
   model.ClassicSerializer:
     properties:
       content:
@@ -116,6 +131,28 @@ paths:
             $ref: '#/definitions/handler.Response'
             type: object
       summary: 获取热搜关键字
+      tags:
+      - Book
+  /v1/book/hot_list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.BookSerializer'
+            type: array
+      summary: 获取热门书籍(概要)
       tags:
       - Book
   /v1/classic/detail/{type}/{id}:

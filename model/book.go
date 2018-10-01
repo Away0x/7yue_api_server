@@ -18,8 +18,30 @@ func (b *Book) Create() error {
 	return DB.Create(&b).Error
 }
 
-func GetBookDetail(book_id int) (*Book, error) {
-	b := &Book{}
-	d := DB.First(&b, book_id)
-	return b, d.Error
+func GetAllBook() ([]*Book, error) {
+	bs := make([]*Book, 0)
+	d := DB.Find(&bs)
+	return bs, d.Error
+}
+
+type BookSerializer struct {
+	Author     string `json:"author"`
+	FavNums    int    `json:"fav_nums"`
+	Id         int    `json:"id"`
+	Image      string `json:"image"`
+	LikeStatus int    `json:"like_status"`
+	Title      string `json:"title"`
+}
+
+func (b *Book) Serializer(like_status int, fav_nums int) BookSerializer {
+	s := BookSerializer{
+		Author: b.Author,
+		FavNums: fav_nums,
+		Id: b.BookId,
+		Image: b.Image,
+		LikeStatus: like_status,
+		Title: b.Title,
+	}
+
+	return s
 }

@@ -204,20 +204,16 @@ func Favor(c *gin.Context) {
 		handler.SendResponse(c, errno.NoClassicError, [...]interface{}{})
 		return
 	}
-	_, ids, err := model.GetUserFavorList(key, []int{constant.ClASSIC_TYPE_MOVIE, constant.ClASSIC_TYPE_MUSIC, constant.ClASSIC_TYPE_SENTENCE})
-	if err != nil {
-		handler.SendResponse(c, err, nil)
-		return
-	}
-	id_map := make(map[int]int, len(classices))
+	_, ids, _ := model.GetUserFavorList(key, []int{constant.ClASSIC_TYPE_MOVIE, constant.ClASSIC_TYPE_MUSIC, constant.ClASSIC_TYPE_SENTENCE})
+	fav_nums_map := make(map[int]int, len(classices))
 	for _, id := range ids {
-		id_map[id] = id_map[id] + 1
+		fav_nums_map[id] = fav_nums_map[id] + 1
 	}
 
 	// 3. 响应数据
 	result := make([]model.ClassicSerializer, len(classices))
 	for index, classic := range classices {
-		result[index] = classic.Serializer(utils.GetPath(c), 1, id_map[int(classic.ID)])
+		result[index] = classic.Serializer(utils.GetPath(c), 1, fav_nums_map[int(classic.ID)])
 	}
 	handler.SendResponse(c, nil, result)
 }

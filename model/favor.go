@@ -52,6 +52,13 @@ func GetFavors(target_id int, _type int) ([]*Favor, error) {
 	return f, d.Error
 }
 
+// 获取所有点赞
+func GetAllFavors() ([]*Favor, error) {
+	f := make([]*Favor, 0)
+	d := DB.Find(&f)
+	return f, d.Error
+}
+
 // 是否点赞 0 未，1 是
 func IsFavor(user_key string, target_id uint, _type int, favors []*Favor) int {
 	for _, item := range favors {

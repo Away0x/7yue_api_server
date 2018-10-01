@@ -9,10 +9,51 @@ import (
 	"github.com/Away0x/7yue_api_server/constant"
 )
 
-// 获取热门书籍(概要)
+// @Summary 获取热门书籍(概要)
+// @Description获取热门书籍(概要)
+// @Tags Book
+// @Accept  json
+// @Produce  json
+// @Param appkey query string true "令牌: 测试可用 admin 或你自己的 appkey"
+// @Success 200 {array} model.BookSerializer
+// @Router /v1/book/hot_list [get]
 func HotList(c *gin.Context) {
-	// 1. 响应数据
-	handler.SendResponse(c, nil, []interface{}{})
+	// 1. 获取数据
+	books, err := model.GetAllBook()
+	if err != nil {
+		handler.SendResponse(c, nil, []interface{}{})
+		return
+	}
+	key := c.MustGet("appkey").(string)
+	favors, _ := model.GetAllFavors()
+
+	// 2. 数据整理
+	result := make([]model.BookSerializer, len(books))         // 最终响应的数据
+	cur_user_favor_status_map := make(map[int]int, len(books)) // 当前用户对于各本书的点赞状态
+	all_user_favor_nums_map := make(map[int]int, len(books))   // 所有用户对于各本书的点赞数
+
+	for _, favor := range favors {
+		// 当前用户是否点过赞
+		if favor.UserKey == key && favor.Type == constant.BOOK_TYPE_CODE {
+			cur_user_favor_status_map[favor.TargetId] = 1
+		}
+		// 用户点赞数统计
+		if favor.Type == constant.BOOK_TYPE_CODE {
+			all_user_favor_nums_map[favor.TargetId] = all_user_favor_nums_map[favor.TargetId] + 1
+		}
+	}
+
+	for index, book := range books {
+		like_status := 0
+		if cur_user_favor_status_map[book.BookId] == 1 {
+			like_status = 1
+		}
+		result[index] = book.Serializer(like_status, all_user_favor_nums_map[book.BookId])
+	}
+
+
+	// 3. 响应数据
+	handler.SendResponse(c, nil, result)
 }
 
 // @Summary 获取喜欢书籍数量

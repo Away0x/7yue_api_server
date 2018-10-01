@@ -111,6 +111,40 @@
                 }
             }
         },
+        "/v1/book/hot_list": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "summary": "获取热门书籍(概要)",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "令牌: 测试可用 admin 或你自己的 appkey",
+                        "name": "appkey",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.BookSerializer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v1/classic/detail/{type}/{id}": {
             "get": {
                 "description": "获取某一期详细信息",
@@ -470,6 +504,29 @@
                 },
                 "type": {
                     "type": "integer"
+                }
+            }
+        },
+        "model.BookSerializer": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "fav_nums": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "like_status": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
                 }
             }
         },
