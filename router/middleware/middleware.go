@@ -31,7 +31,7 @@ func KeyAuth(c *gin.Context) {
 
 	// 没有 key
 	if err := model.IsExistKey(key); err != nil || key == "" {
-		handler.SendResponse(c, errno.New(errno.AuthError, nil).Addf("appkey 错误 - %s", key), nil)
+		handler.SendResponse(c, errno.New(errno.AuthError, nil).Addf("appkey 错误 - %s 该用户还未注册", key), nil)
 		c.Abort()
 		return
 	}

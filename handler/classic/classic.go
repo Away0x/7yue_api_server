@@ -6,8 +6,8 @@ import (
 	"github.com/Away0x/7yue_api_server/constant/errno"
 	"github.com/Away0x/7yue_api_server/utils"
 	"github.com/Away0x/7yue_api_server/model"
-	"fmt"
 	"github.com/Away0x/7yue_api_server/utils/validate"
+	"github.com/Away0x/7yue_api_server/constant"
 )
 
 // @Summary 获取最新一期期刊
@@ -22,15 +22,15 @@ func Latest(c *gin.Context) {
 	// 1. 查询数据
 	classic, err := model.LatestClassic()
 	if err != nil {
-		fmt.Println(err)
 		handler.SendResponse(c, errno.NoClassicError, nil)
 		return
 	}
 	key := c.MustGet("appkey").(string)
-	is_favor := model.IsFavor(key, int(classic.ID), classic.Type)
+	favors, _ := model.GetFavors(int(classic.ID), classic.Type)
+	is_favor := model.IsFavor(key, classic.ID, classic.Type, favors)
 
-	// 2. 响应数据
-	handler.SendResponse(c, errno.OK, classic.Serializer(utils.GetPath(c), is_favor))
+	// 3. 响应数据
+	handler.SendResponse(c, errno.OK, classic.Serializer(utils.GetPath(c), is_favor, len(favors)))
 }
 
 // @Summary 获取当前一期的下一期期刊
@@ -57,10 +57,11 @@ func Next(c *gin.Context) {
 		return
 	}
 	key := c.MustGet("appkey").(string)
-	is_favor := model.IsFavor(key, int(classic.ID), classic.Type)
+	favors, _ := model.GetFavors(int(classic.ID), classic.Type)
+	is_favor := model.IsFavor(key, classic.ID, classic.Type, favors)
 
 	// 3. 响应数据
-	handler.SendResponse(c, nil, classic.Serializer(utils.GetPath(c), is_favor))
+	handler.SendResponse(c, errno.OK, classic.Serializer(utils.GetPath(c), is_favor, len(favors)))
 }
 
 // @Summary 获取当前一期的上一期期刊
@@ -87,10 +88,11 @@ func Previous(c *gin.Context) {
 		return
 	}
 	key := c.MustGet("appkey").(string)
-	is_favor := model.IsFavor(key, int(classic.ID), classic.Type)
+	favors, _ := model.GetFavors(int(classic.ID), classic.Type)
+	is_favor := model.IsFavor(key, classic.ID, classic.Type, favors)
 
 	// 3. 响应数据
-	handler.SendResponse(c, nil, classic.Serializer(utils.GetPath(c), is_favor))
+	handler.SendResponse(c, errno.OK, classic.Serializer(utils.GetPath(c), is_favor, len(favors)))
 }
 
 // @Summary 获取某一期详细信息
@@ -123,10 +125,11 @@ func Detail(c *gin.Context) {
 		return
 	}
 	key := c.MustGet("appkey").(string)
-	is_favor := model.IsFavor(key, int(classic.ID), classic.Type)
+	favors, _ := model.GetFavors(int(classic.ID), classic.Type)
+	is_favor := model.IsFavor(key, classic.ID, classic.Type, favors)
 
 	// 3. 响应数据
-	handler.SendResponse(c, nil, classic.Serializer(utils.GetPath(c), is_favor))
+	handler.SendResponse(c, errno.OK, classic.Serializer(utils.GetPath(c), is_favor, len(favors)))
 }
 
 // @Summary 获取点赞信息
@@ -159,11 +162,12 @@ func Like(c *gin.Context) {
 		return
 	}
 	key := c.MustGet("appkey").(string)
-	is_favor := model.IsFavor(key, int(classic.ID), classic.Type)
+	favors, _ := model.GetFavors(int(classic.ID), classic.Type)
+	is_favor := model.IsFavor(key, classic.ID, classic.Type, favors)
 
 	// 3. 响应数据
 	handler.SendResponse(c, nil, gin.H{
-		"fav_nums": classic.FavNums,
+		"fav_nums": len(favors),
 		"id": classic.ID,
 		"like_status": is_favor,
 	})
@@ -200,11 +204,20 @@ func Favor(c *gin.Context) {
 		handler.SendResponse(c, errno.NoClassicError, [...]interface{}{})
 		return
 	}
+	_, ids, err := model.GetUserFavorList(key, []int{constant.ClASSIC_TYPE_MOVIE, constant.ClASSIC_TYPE_MUSIC, constant.ClASSIC_TYPE_SENTENCE})
+	if err != nil {
+		handler.SendResponse(c, err, nil)
+		return
+	}
+	id_map := make(map[int]int, len(classices))
+	for _, id := range ids {
+		id_map[id] = id_map[id] + 1
+	}
 
 	// 3. 响应数据
 	result := make([]model.ClassicSerializer, len(classices))
 	for index, classic := range classices {
-		result[index] = classic.Serializer(utils.GetPath(c), 1)
+		result[index] = classic.Serializer(utils.GetPath(c), 1, id_map[int(classic.ID)])
 	}
 	handler.SendResponse(c, nil, result)
 }

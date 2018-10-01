@@ -9,7 +9,6 @@ import (
 type Classic struct {
 	gorm.Model
 	Content    string  `gorm:"type:varchar(255);not null;column:content"`
-	FavNums    int     `gorm:"type:integer;not null;column:fav_nums;default:0"`
 	Image      string  `gorm:"type:varchar(128);not null;column:image"`
 	Url        string  `gorm:"type:varchar(128);not null;column:url"`
 	Index      int     `gorm:"type:integer;not null;column:index"`
@@ -56,18 +55,6 @@ func GetClassicDetail(id int, _type int) (*Classic, error) {
 	return c, d.Error
 }
 
-// 点赞期刊
-func (c *Classic) FavorClassic() error {
-	num := c.FavNums + 1
-	return DB.Model(&c).Update("fav_nums", num).Error
-}
-
-// 取消点赞期刊
-func (c *Classic) CancelFavorClassic() error {
-	num := c.FavNums - 1
-	return DB.Model(&c).Update("fav_nums", num).Error
-}
-
 // 获取我喜欢的期刊
 func GetFavorClassices(user_key string, page int, count int) ([]*Classic, error) {
 	classices := make([]*Classic, count)
@@ -95,12 +82,12 @@ type ClassicSerializer struct {
 	Type       int     `json:"type"`
 }
 
-func (c *Classic) Serializer(path string, like_status int) ClassicSerializer {
+func (c *Classic) Serializer(path string, like_status int, fav_nums int) ClassicSerializer {
 	s := ClassicSerializer{
 		Id: c.ID,
 		Pubdate: c.CreatedAt.Format("2006-01-02"),
 		Content: c.Content,
-		FavNums: c.FavNums,
+		FavNums: fav_nums,
 		Image: path + "/static/images/" + c.Image,
 		Index: c.Index,
 		LikeStatus: like_status,

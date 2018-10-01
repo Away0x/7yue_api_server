@@ -10,6 +10,16 @@ definitions:
       request:
         type: string
     type: object
+  like.LikeBody:
+    properties:
+      art_id:
+        type: integer
+      type:
+        type: integer
+    required:
+    - art_id
+    - type
+    type: object
   model.ClassicSerializer:
     properties:
       content:
@@ -37,6 +47,77 @@ info:
   contact: {}
   license: {}
 paths:
+  /v1/book/favor/{book_id}:
+    get:
+      consumes:
+      - application/json
+      description: 获取书籍点赞情况
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 书籍 id
+        in: path
+        name: book_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 获取书籍点赞情况
+      tags:
+      - Book
+  /v1/book/favor_count:
+    get:
+      consumes:
+      - application/json
+      description: 获取喜欢书籍数量
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 获取喜欢书籍数量
+      tags:
+      - Book
+  /v1/book/hot_keyword:
+    get:
+      consumes:
+      - application/json
+      description: 获取热搜关键字
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 获取热搜关键字
+      tags:
+      - Book
   /v1/classic/detail/{type}/{id}:
     get:
       consumes:
@@ -200,4 +281,62 @@ paths:
       summary: 获取当前一期的上一期期刊
       tags:
       - Classic
+  /v1/like:
+    post:
+      consumes:
+      - application/json
+      description: 进行点赞
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 点赞的信息
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/like.LikeBody'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 进行点赞
+      tags:
+      - Like
+  /v1/like/cancel:
+    post:
+      consumes:
+      - application/json
+      description: 取消点赞
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 取消点赞的信息
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/like.LikeBody'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 取消点赞
+      tags:
+      - Like
 swagger: "2.0"

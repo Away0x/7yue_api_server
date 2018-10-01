@@ -13,3 +13,18 @@ type BookComment struct {
 func (BookComment) TableName() string {
 	return "book_comment"
 }
+
+func (b *BookComment) Create() error {
+	return DB.Create(&b).Error
+}
+
+func (b *BookComment) AddNums() error {
+	num := b.Nums + 1
+	return DB.Model(&b).Update("nums", num).Error
+}
+
+func GetThisBookAllComments(book_id int) ([]*BookComment, error) {
+	comments := make([]*BookComment, 0)
+	d := DB.Where("book_id = ?", book_id).Find(&comments)
+	return comments, d.Error
+}

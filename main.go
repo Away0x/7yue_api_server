@@ -38,15 +38,16 @@ func main() {
 // mock 数据
 func mockInit() {
 	// mock user
-	// mock.PushDataIntoUserTable()
+	//mock.PushDataIntoUserTable()
 
 	// mock classic
-	// mock.PushDataIntoClassicTable()
+	//mock.PushDataIntoClassicTable()
 
 	// mock book
+	//mock.PushDataIntoBookTable()
 
 	// mock book short comment
 
 	// mock hot keyword
-	// mock.PushDataIntoHotKeyWordTable()
+	//mock.PushDataIntoHotKeyWordTable()
 }

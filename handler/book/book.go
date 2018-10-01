@@ -6,6 +6,7 @@ import (
 	"github.com/Away0x/7yue_api_server/utils/validate"
 	"github.com/Away0x/7yue_api_server/constant/errno"
 	"github.com/Away0x/7yue_api_server/model"
+	"github.com/Away0x/7yue_api_server/constant"
 )
 
 // 获取热门书籍(概要)
@@ -14,26 +15,40 @@ func HotList(c *gin.Context) {
 	handler.SendResponse(c, nil, []interface{}{})
 }
 
-// 获取书籍短评
-func ShortComment(c *gin.Context) {
-	// 1. 参数验证
-	id, err := validate.NumberParamsValidate(c,"book_id")
+// @Summary 获取喜欢书籍数量
+// @Description 获取喜欢书籍数量
+// @Tags Book
+// @Accept  json
+// @Produce  json
+// @Param appkey query string true "令牌: 测试可用 admin 或你自己的 appkey"
+// @Success 200 {object} handler.Response
+// @Router /v1/book/favor_count [get]
+func FavorCount(c *gin.Context) {
+	// 1. 获取数据
+	key := c.MustGet("appkey").(string)
+	_, ids, err := model.GetUserFavorList(key, []int{constant.BOOK_TYPE_CODE})
 	if err != nil {
-		handler.SendResponse(c, err, nil)
+		handler.SendResponse(c, nil, gin.H{
+			"count": 0,
+		})
 		return
 	}
 
 	// 2. 响应数据
-	handler.SendResponse(c,nil, id)
+	handler.SendResponse(c, nil, gin.H{
+		"count": len(ids),
+	})
 }
 
-// 获取喜欢书籍数量
-func FavorCount(c *gin.Context) {
-	// 1. 响应数据
-	handler.SendResponse(c, nil, "ok")
-}
-
-// 获取书籍点赞情况
+// @Summary 获取书籍点赞情况
+// @Description 获取书籍点赞情况
+// @Tags Book
+// @Accept  json
+// @Produce  json
+// @Param appkey query string true "令牌: 测试可用 admin 或你自己的 appkey"
+// @Param book_id path int true "书籍 id"
+// @Success 200 {object} handler.Response
+// @Router /v1/book/favor/{book_id} [get]
 func FavorStatus(c *gin.Context) {
 	// 1. 参数验证
 	id, err := validate.NumberParamsValidate(c,"book_id")
@@ -42,16 +57,34 @@ func FavorStatus(c *gin.Context) {
 		return
 	}
 
-	// 2. 响应数据
-	handler.SendResponse(c, nil, id)
+	// 2. 查询数据
+	key := c.MustGet("appkey").(string)
+	favors, _ := model.GetFavors(id, constant.BOOK_TYPE_CODE)
+	is_favor := model.IsFavor(key, uint(id), constant.BOOK_TYPE_CODE, favors)
+
+	// 3. 响应数据
+	handler.SendResponse(c, nil, gin.H{
+		"fav_nums": len(favors),
+		"id": id,
+		"like_status": is_favor,
+	})
 }
 
-// 获取热搜关键字
+// @Summary 获取热搜关键字
+// @Description 获取热搜关键字
+// @Tags Book
+// @Accept  json
+// @Produce  json
+// @Param appkey query string true "令牌: 测试可用 admin 或你自己的 appkey"
+// @Success 200 {object} handler.Response
+// @Router /v1/book/hot_keyword [get]
 func HotKeyword(c *gin.Context) {
 	// 1. 获取数据
 	words, err := model.GetAllHotKeyWord()
 	if err != nil {
-		handler.SendResponse(c, errno.NoResourceError, nil)
+		handler.SendResponse(c, nil, gin.H{
+			"hot": []interface{}{},
+		})
 		return
 	}
 
@@ -72,6 +105,19 @@ func AddShortComment(c *gin.Context) {
 
 	// 2. 响应数据
 	handler.SendResponse(c, nil, body)
+}
+
+// 获取书籍短评
+func ShortComment(c *gin.Context) {
+	// 1. 参数验证
+	id, err := validate.NumberParamsValidate(c,"book_id")
+	if err != nil {
+		handler.SendResponse(c, err, nil)
+		return
+	}
+
+	// 2. 响应数据
+	handler.SendResponse(c,nil, id)
 }
 
 // 书籍搜索

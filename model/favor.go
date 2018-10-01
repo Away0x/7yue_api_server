@@ -1,6 +1,9 @@
 package model
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/jinzhu/gorm"
+	"github.com/Away0x/7yue_api_server/constant/errno"
+)
 
 type Favor struct {
 	gorm.Model
@@ -13,14 +16,26 @@ func (Favor) TableName() string {
 	return "favor"
 }
 
-// 进行点赞
 func (f *Favor) Create() error {
 	return DB.Create(&f).Error
 }
 
+// 点赞
+func AddFavor(user_key string, target_id int, _type int) error {
+	if _, err := GetFavor(user_key, target_id, _type); err == nil {
+		return errno.FavoredError
+	}
+	f := Favor{UserKey: user_key, TargetId: target_id, Type: _type}
+	return f.Create()
+}
+
 // 取消点赞
-func (f *Favor) Delete() error {
-	return DB.Delete(&f).Error
+func CancelFavor(user_key string, target_id int, _type int) error {
+	if _, err := GetFavor(user_key, target_id, _type); err != nil {
+		return errno.NoFavorError
+	}
+	f := Favor{UserKey: user_key, TargetId: target_id, Type: _type}
+	return DB.Where(f).Delete(&Favor{}).Error
 }
 
 // 获取点赞
@@ -30,12 +45,21 @@ func GetFavor(user_key string, target_id int, _type int) (*Favor, error) {
 	return f, d.Error
 }
 
+// 获取所有用户对该数据的点赞
+func GetFavors(target_id int, _type int) ([]*Favor, error) {
+	f := make([]*Favor, 0)
+	d := DB.Where("target_id = ? AND type = ?", target_id, _type).Find(&f)
+	return f, d.Error
+}
+
 // 是否点赞 0 未，1 是
-func IsFavor(user_key string, target_id int, _type int) int {
-	if _, err := GetFavor(user_key, target_id, _type); err != nil {
-		return 0
+func IsFavor(user_key string, target_id uint, _type int, favors []*Favor) int {
+	for _, item := range favors {
+		if item.UserKey == user_key && target_id == uint(item.TargetId) && _type == item.Type {
+			return 1
+		}
 	}
-	return 1
+	return 0
 }
 
 // 获取用户所有的点赞
