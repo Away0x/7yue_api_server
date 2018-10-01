@@ -1,27 +1,203 @@
+definitions:
+  handler.Response:
+    properties:
+      error_code:
+        type: integer
+      error_message:
+        type: string
+      msg:
+        type: object
+      request:
+        type: string
+    type: object
+  model.ClassicSerializer:
+    properties:
+      content:
+        type: string
+      fav_nums:
+        type: integer
+      id:
+        type: integer
+      image:
+        type: string
+      index:
+        type: integer
+      like_status:
+        type: integer
+      pubdate:
+        type: string
+      title:
+        type: string
+      type:
+        type: integer
+      url:
+        type: string
+    type: object
 info:
   contact: {}
   license: {}
 paths:
-  /user/register:
-    post:
+  /v1/classic/detail/{type}/{id}:
+    get:
       consumes:
       - application/json
+      description: 获取某一期详细信息
       parameters:
-      - description: Create a new user
-        in: body
-        name: user
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
         required: true
-        schema:
-          type: object
+        type: string
+      - description: 期刊的类型 100 200 300
+        in: path
+        name: type
+        required: true
+        type: integer
+      - description: 当前期刊的 id
+        in: path
+        name: id
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          description: OK
           schema:
-            $ref: '#/definitions/interface'
+            $ref: '#/definitions/model.ClassicSerializer'
             type: object
-      summary: 注册
+      summary: 获取某一期详细信息
       tags:
-      - user
+      - Classic
+  /v1/classic/favor:
+    get:
+      consumes:
+      - application/json
+      description: 获取我喜欢的期刊
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.ClassicSerializer'
+            type: array
+      summary: 获取我喜欢的期刊
+      tags:
+      - Classic
+  /v1/classic/favor/{type}/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 获取点赞信息
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 期刊的类型 100 200 300
+        in: path
+        name: type
+        required: true
+        type: integer
+      - description: 当前期刊的 id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 获取点赞信息
+      tags:
+      - Classic
+  /v1/classic/latest:
+    get:
+      consumes:
+      - application/json
+      description: 获取最新一期期刊
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ClassicSerializer'
+            type: object
+      summary: 获取最新一期期刊
+      tags:
+      - Classic
+  /v1/classic/next/{index}:
+    get:
+      consumes:
+      - application/json
+      description: 获取当前一期的下一期期刊
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 当前期刊的 index
+        in: path
+        name: index
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ClassicSerializer'
+            type: object
+      summary: 获取当前一期的下一期期刊
+      tags:
+      - Classic
+  /v1/classic/previous/{index}:
+    get:
+      consumes:
+      - application/json
+      description: 获取当前一期的上一期期刊
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 当前期刊的 index
+        in: path
+        name: index
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ClassicSerializer'
+            type: object
+      summary: 获取当前一期的上一期期刊
+      tags:
+      - Classic
 swagger: "2.0"

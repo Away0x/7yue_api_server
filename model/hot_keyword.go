@@ -1,13 +1,32 @@
 // 热搜关键字
 package model
 
-import "time"
+import "github.com/jinzhu/gorm"
 
 type HotKeyword struct {
-	Id uint64 `gorm:"primary_key;AUTO_INCREMENT;column:id" json:"id"`
-	CreatedAt time.Time `gorm:"column:createdAt" json:"pubdate"`
-	UpdatedAt time.Time `gorm:"column:updatedAt" json:"-"`
-	DeletedAt *time.Time `gorm:"column:deletedAt" sql:"index" json:"-"`
+	gorm.Model
+	Text string `gorm:"column:text;unique;index:text;not null"`
+}
 
-	Text string `gorm:"column:text;unique;index:text;not null" json:"text"`
+func (HotKeyword) TableName() string {
+	return "hot_keyword"
+}
+
+func (h *HotKeyword) Create() error {
+	return DB.Create(&h).Error
+}
+
+// 获取所有热搜关键字
+func GetAllHotKeyWord() ([]string, error){
+	h := make([]HotKeyword, 0)
+	d := DB.Find(&h)
+	if d.Error != nil {
+		return nil, d.Error
+	}
+
+	s := make([]string, len(h))
+	for index, item := range h {
+		s[index] = item.Text
+	}
+	return s, d.Error
 }

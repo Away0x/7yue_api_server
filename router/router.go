@@ -60,7 +60,7 @@ func Register(g *gin.Engine) *gin.Engine {
 
 		// 书籍
 		bookRouter := v1.Group("/book")
-		classicRouter.Use(middleware.KeyAuth)
+		bookRouter.Use(middleware.KeyAuth)
 		{
 			// 获取热门书籍(概要)
 			bookRouter.GET("/hot_list", book.HotList)
@@ -82,7 +82,7 @@ func Register(g *gin.Engine) *gin.Engine {
 
 		// 点赞
 		likeRouter := v1.Group("/like")
-		classicRouter.Use(middleware.KeyAuth)
+		likeRouter.Use(middleware.KeyAuth)
 		{
 			// 进行点赞
 			likeRouter.POST("", like.Like)

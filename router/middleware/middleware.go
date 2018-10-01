@@ -2,9 +2,10 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/Away0x/7yue_api_server/handler"
+	"github.com/Away0x/7yue_api_server/model"
 	"github.com/Away0x/7yue_api_server/constant/errno"
-	)
+	"github.com/Away0x/7yue_api_server/handler"
+)
 
 // 跨域
 func Options(c *gin.Context) {
@@ -29,10 +30,12 @@ func KeyAuth(c *gin.Context) {
 	}
 
 	// 没有 key
-	if key != "abc" {
+	if err := model.IsExistKey(key); err != nil || key == "" {
 		handler.SendResponse(c, errno.New(errno.AuthError, nil).Addf("appkey 错误 - %s", key), nil)
 		c.Abort()
 		return
 	}
+
+	c.Set("appkey", key)
 	c.Next()
 }

@@ -1,17 +1,29 @@
 package model
 
-import "time"
+import (
+	"github.com/jinzhu/gorm"
+)
 
 type User struct {
-	Id        uint64     `gorm:"primary_key;AUTO_INCREMENT;column:id" json:"id"`
-	CreatedAt time.Time  `gorm:"column:createdAt" json:"-"`
-	UpdatedAt time.Time  `gorm:"column:updatedAt" json:"-"`
-	DeletedAt *time.Time `gorm:"column:deletedAt" sql:"index" json:"-"`
-
+	gorm.Model
 	Name string `gorm:"column:name;unique;index:name;not null" json:"name"`
 	Key string `gorm:"column:key;unique;index:key;not null" json:"key"`
 }
 
 func (User) TableName() string {
 	return "user"
+}
+
+func (u *User) Create() error {
+	return DB.Create(&u).Error
+}
+
+// 是否存在该 key
+func IsExistKey(key string) error {
+	u := &User{Key: key}
+	d := DB.Where(u).First(&u)
+	if d.Error != nil {
+		return d.Error
+	}
+	return nil
 }

@@ -16,6 +16,14 @@ func NumberParamsValidate(c *gin.Context, key string) (int, error) {
 
 	return num, nil
 }
+func NumberQueryValidate(c *gin.Context, key string, default_value string) (int, error) {
+	num, err := strconv.Atoi(c.DefaultQuery(key, default_value))
+	if err != nil {
+		return -1, errno.New(errno.ParamsError, nil).Addf( "参数 %s 必须为数字类型", key)
+	}
+
+	return num, nil
+}
 
 // 期刊类型必须为数字，且在取值范围内
 func ClassicTypeParamsValidate(c *gin.Context, key string) (int, error) {

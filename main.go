@@ -26,8 +26,27 @@ func main() {
 		&model.HotKeyword{})
 	defer db.Close()
 
+	// mock
+	mockInit()
+
 	router.Register(g)
 
-	log.Printf("Start to listening the incoming requests on http address: %s", ":8888")
-	log.Fatal(http.ListenAndServe(":8888", g).Error())
+	log.Printf("Start to listening the incoming requests on http address: %s", ":8886")
+	log.Fatal(http.ListenAndServe(":8886", g).Error())
+}
+
+// mock 数据
+func mockInit() {
+	// mock user
+	// mock.PushDataIntoUserTable()
+
+	// mock classic
+	// mock.PushDataIntoClassicTable()
+
+	// mock book
+
+	// mock book short comment
+
+	// mock hot keyword
+	// mock.PushDataIntoHotKeyWordTable()
 }

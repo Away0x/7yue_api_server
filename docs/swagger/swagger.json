@@ -5,8 +5,9 @@
         "license": {}
     },
     "paths": {
-        "/user/register": {
-            "post": {
+        "/v1/classic/detail/{type}/{id}": {
+            "get": {
+                "description": "获取某一期详细信息",
                 "consumes": [
                     "application/json"
                 ],
@@ -14,28 +15,289 @@
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "Classic"
                 ],
-                "summary": "注册",
+                "summary": "获取某一期详细信息",
                 "parameters": [
                     {
-                        "description": "Create a new user",
-                        "name": "user",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object"
-                        }
+                        "type": "string",
+                        "description": "令牌: 测试可用 admin 或你自己的 appkey",
+                        "name": "appkey",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "期刊的类型 100 200 300",
+                        "name": "type",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前期刊的 id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "{\"code\":0,\"message\":\"OK\",\"data\":{\"username\":\"kong\"}}",
+                        "description": "OK",
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/interface"
+                            "$ref": "#/definitions/model.ClassicSerializer"
                         }
                     }
+                }
+            }
+        },
+        "/v1/classic/favor": {
+            "get": {
+                "description": "获取我喜欢的期刊",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classic"
+                ],
+                "summary": "获取我喜欢的期刊",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "令牌: 测试可用 admin 或你自己的 appkey",
+                        "name": "appkey",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.ClassicSerializer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/classic/favor/{type}/{id}": {
+            "get": {
+                "description": "获取点赞信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classic"
+                ],
+                "summary": "获取点赞信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "令牌: 测试可用 admin 或你自己的 appkey",
+                        "name": "appkey",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "期刊的类型 100 200 300",
+                        "name": "type",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前期刊的 id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/handler.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/classic/latest": {
+            "get": {
+                "description": "获取最新一期期刊",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classic"
+                ],
+                "summary": "获取最新一期期刊",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "令牌: 测试可用 admin 或你自己的 appkey",
+                        "name": "appkey",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.ClassicSerializer"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/classic/next/{index}": {
+            "get": {
+                "description": "获取当前一期的下一期期刊",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classic"
+                ],
+                "summary": "获取当前一期的下一期期刊",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "令牌: 测试可用 admin 或你自己的 appkey",
+                        "name": "appkey",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前期刊的 index",
+                        "name": "index",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.ClassicSerializer"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/classic/previous/{index}": {
+            "get": {
+                "description": "获取当前一期的上一期期刊",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Classic"
+                ],
+                "summary": "获取当前一期的上一期期刊",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "令牌: 测试可用 admin 或你自己的 appkey",
+                        "name": "appkey",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前期刊的 index",
+                        "name": "index",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.ClassicSerializer"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handler.Response": {
+            "type": "object",
+            "properties": {
+                "error_code": {
+                    "type": "integer"
+                },
+                "error_message": {
+                    "type": "string"
+                },
+                "msg": {
+                    "type": "object"
+                },
+                "request": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.ClassicSerializer": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "fav_nums": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "index": {
+                    "type": "integer"
+                },
+                "like_status": {
+                    "type": "integer"
+                },
+                "pubdate": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "string"
                 }
             }
         }
