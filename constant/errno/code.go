@@ -19,4 +19,7 @@ var (
 
 	// 300x 期刊类型
 	NoClassicError     = &Errno{Code: 3000, Message: "该期内容不存在"}
+
+	// 400x user
+	UserCreateError    = &Errno{Code: 4000, Message: "用户创建失败"}
 )

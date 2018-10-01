@@ -135,7 +135,15 @@ func HotKeyword(c *gin.Context) {
 	})
 }
 
-// 新增短评
+// @Summary 新增短评
+// @Description 新增短评
+// @Tags Book
+// @Accept  json
+// @Produce  json
+// @Param appkey query string true "令牌: 测试可用 admin 或你自己的 appkey"
+// @Param body body book.AddShortCommentBody true "短评信息"
+// @Success 200 {object} handler.Response
+// @Router /v1/book/add/short_comment [post]
 func AddShortComment(c *gin.Context) {
 	// 1. 参数绑定
 	var body AddShortCommentBody
@@ -144,11 +152,34 @@ func AddShortComment(c *gin.Context) {
 		return
 	}
 
+	// 2. 操作数据库 (短评已存在则 nums +1，否则创建)
+	if comment, err := model.IsExistThisBookComments(body.BookId, body.Content); err == nil {
+		if err := comment.AddNums(); err != nil {
+			handler.SendResponse(c, err, nil)
+			return
+		}
+	} else {
+		new_comment := model.BookComment{Content: body.Content, BookId: body.BookId, Nums: 1}
+		if err := new_comment.Create(); err != nil {
+			handler.SendResponse(c, err, nil)
+			return
+		}
+	}
+
+
 	// 2. 响应数据
-	handler.SendResponse(c, nil, body)
+	handler.SendResponse(c, nil, "ok")
 }
 
-// 获取书籍短评
+// @Summary 获取书籍短评
+// @Description 获取书籍短评
+// @Tags Book
+// @Accept  json
+// @Produce  json
+// @Param appkey query string true "令牌: 测试可用 admin 或你自己的 appkey"
+// @Param book_id path string true "书籍 id"
+// @Success 200 {object} handler.Response
+// @Router /v1/book/short_comment/{book_id} [get]
 func ShortComment(c *gin.Context) {
 	// 1. 参数验证
 	id, err := validate.NumberParamsValidate(c,"book_id")
@@ -157,8 +188,14 @@ func ShortComment(c *gin.Context) {
 		return
 	}
 
+	// 2. 获取数据
+	comments, _ := model.GetThisBookAllComments(id)
+
 	// 2. 响应数据
-	handler.SendResponse(c,nil, id)
+	handler.SendResponse(c,nil, gin.H{
+		"book_id": id,
+		"comments": comments,
+	})
 }
 
 // 书籍搜索

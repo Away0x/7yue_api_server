@@ -1,11 +1,15 @@
 package model
 
 import (
-	"github.com/jinzhu/gorm"
+	"time"
 )
 
 type User struct {
-	gorm.Model
+	ID        uint `gorm:"primary_key" json:"id"`
+	CreatedAt time.Time `json:"-"`
+	UpdatedAt time.Time `json:"-"`
+	DeletedAt *time.Time `sql:"index" json:"-"`
+
 	Name string `gorm:"column:name;unique;index:name;not null" json:"name"`
 	Key string `gorm:"column:key;unique;index:key;not null" json:"key"`
 }
@@ -26,4 +30,11 @@ func IsExistKey(key string) error {
 		return d.Error
 	}
 	return nil
+}
+
+// 所有用户信息
+func GetAllUser() ([]*User, error) {
+	us := make([]*User, 0)
+	d := DB.Find(&us)
+	return us, d.Error
 }

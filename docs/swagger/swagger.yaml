@@ -1,4 +1,14 @@
 definitions:
+  book.AddShortCommentBody:
+    properties:
+      book_id:
+        type: integer
+      content:
+        type: string
+    required:
+    - content
+    - book_id
+    type: object
   handler.Response:
     properties:
       error_code:
@@ -58,10 +68,55 @@ definitions:
       url:
         type: string
     type: object
+  model.User:
+    properties:
+      id:
+        type: integer
+      key:
+        type: string
+      name:
+        type: string
+    type: object
+  user.UserBody:
+    properties:
+      username:
+        type: string
+    required:
+    - username
+    type: object
 info:
   contact: {}
   license: {}
 paths:
+  /v1/book/add/short_comment:
+    post:
+      consumes:
+      - application/json
+      description: 新增短评
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 短评信息
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/book.AddShortCommentBody'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 新增短评
+      tags:
+      - Book
   /v1/book/favor/{book_id}:
     get:
       consumes:
@@ -153,6 +208,33 @@ paths:
               $ref: '#/definitions/model.BookSerializer'
             type: array
       summary: 获取热门书籍(概要)
+      tags:
+      - Book
+  /v1/book/short_comment/{book_id}:
+    get:
+      consumes:
+      - application/json
+      description: 获取书籍短评
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 书籍 id
+        in: path
+        name: book_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 获取书籍短评
       tags:
       - Book
   /v1/classic/detail/{type}/{id}:
@@ -376,4 +458,44 @@ paths:
       summary: 取消点赞
       tags:
       - Like
+  /v1/user:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有用户
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.User'
+            type: array
+      summary: 获取所有用户
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: 注册
+      parameters:
+      - description: 用户名
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/user.UserBody'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 注册
+      tags:
+      - User
 swagger: "2.0"
