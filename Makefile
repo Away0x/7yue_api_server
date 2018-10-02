@@ -1,4 +1,4 @@
-APP_NAME = "qiyue_api_server_linux_amd64"
+APP_NAME = "qiyue_api"
 
 default:
 	env GOOS=linux GOARCH=amd64 go build -o ${APP_NAME}
