@@ -12,6 +12,7 @@ import (
 	"github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"github.com/Away0x/7yue_api_server/handler/user"
+	"github.com/Away0x/7yue_api_server/handler/sd"
 )
 
 func Register(g *gin.Engine) *gin.Engine {
@@ -30,6 +31,12 @@ func Register(g *gin.Engine) *gin.Engine {
 
 	// index
 	g.GET("", user.Index)
+
+	// sd 健康检查
+	sdRoute := g.Group("/sd")
+	{
+		sdRoute.GET("/health", sd.HealthCheck)
+	}
 
 	v1 := g.Group("/v1")
 	{

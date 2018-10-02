@@ -13,7 +13,8 @@ function start()
 		exit 1
 	fi
 
-	nohup $BASE_DIR/$SERVER $ARGS  server &>/dev/null &
+	#nohup $BASE_DIR/$SERVER $ARGS server &>/dev/null &
+	nohup $BASE_DIR/$SERVER $ARGS &
 
 	echo "sleeping..." &&  sleep $INTERVAL
 

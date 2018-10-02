@@ -6,18 +6,20 @@ import (
 	"log"
 	"net/http"
 	"github.com/Away0x/7yue_api_server/model"
-	"github.com/Away0x/7yue_api_server/config"
 	"github.com/spf13/viper"
 	"github.com/Away0x/7yue_api_server/mock"
+	"github.com/Away0x/7yue_api_server/config"
 )
 
 func main() {
+	config.InitConfig()
+
+	gin.SetMode(viper.GetString("runmode"))
+
 	g := gin.New()
 	g.Static("/static", "static")
 	g.LoadHTMLGlob("templates/*")
 	g.StaticFile("/favicon.ico", "static/favicon.ico")
-
-	config.InitConfig()
 
 	db := model.InitDB()
 	db.AutoMigrate(

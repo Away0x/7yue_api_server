@@ -1,3 +1,4 @@
+runmode: release # 开发模式, debug, release, test
 port: :8886
 db:
   name: qiyue_api_server
