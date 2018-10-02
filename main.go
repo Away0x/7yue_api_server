@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"github.com/Away0x/7yue_api_server/model"
 	"github.com/Away0x/7yue_api_server/config"
+	"github.com/spf13/viper"
 )
 
 func main() {
@@ -31,8 +32,8 @@ func main() {
 
 	router.Register(g)
 
-	log.Printf("Start to listening the incoming requests on http address: %s", ":8886")
-	log.Fatal(http.ListenAndServe(":8886", g).Error())
+	log.Printf("Start to listening the incoming requests on http address: %s", viper.GetString("port"))
+	log.Fatal(http.ListenAndServe(viper.GetString("port"), g).Error())
 }
 
 // mock 数据
