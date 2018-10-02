@@ -11,3 +11,11 @@ make
 ./admin.sh start
 # 之后可打开 localhost:8886 注册 key 以及查看 api 文档
 ```
+
+![/](images/1.png)
+
+![book api](images/2.png)
+
+![classic api](images/3.png)
+
+![like and user api](images/4.png)
