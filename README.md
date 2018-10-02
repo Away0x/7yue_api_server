@@ -2,7 +2,7 @@
 ```bash
 cd 7yue_api_server
 cp config/config.yaml.default config/config.yaml
-make install
+make install # 需要有 godep
 make
 ./admin.sh start
 # 之后可打开 localhost:8886 注册 key 以及查看 api 文档

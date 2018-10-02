@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SERVER="qiyue_api_server"
+SERVER="qiyue_api_server_linux_amd64"
 BASE_DIR=$PWD
 INTERVAL=2
 
