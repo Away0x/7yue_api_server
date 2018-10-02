@@ -1,1 +1,30 @@
-<a href="/swagger/index.html">api 文档</a>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>index</title>
+    <link rel="stylesheet" href="//qidian.gtimg.com/lulu/theme/peak/css/common/ui.css">
+    <link rel="stylesheet" href="/static/index/index.css">
+</head>
+<body>
+    <header>
+        <a href="/swagger/index.html" target="_blank" class="ui-button ui-button-success" role="button" tabindex="0">查看 api 文档</a>
+    </header>
+
+    <div class="form">
+       Name: <input id="username" class="ui-input">
+        <a href="javascript:" id="submit" class="ui-button ui-button-primary" role="button">提交</a>
+    </div>
+
+    <table class="table ui-table">
+        <tr>
+            <th scope="col" width="100">ID</th>
+            <th scope="col" width="200">NAME</th>
+            <th scope="col">KEY</th>
+        <tbody class="table_content"></tbody>
+    </table>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script src="/static/index/index.js"></script>
+</body>
+</html>

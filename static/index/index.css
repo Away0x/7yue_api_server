@@ -1,0 +1,11 @@
+body {
+    padding: 20px 50px;
+}
+
+#username {
+    margin-right: 20px;
+}
+
+header, .form {
+    margin-bottom: 30px;
+}

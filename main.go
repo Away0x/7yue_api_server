@@ -15,6 +15,7 @@ func main() {
 	g := gin.New()
 	g.Static("/static", "static")
 	g.LoadHTMLGlob("templates/*")
+	g.StaticFile("/favicon.ico", "static/favicon.ico")
 
 	config.InitConfig()
 
