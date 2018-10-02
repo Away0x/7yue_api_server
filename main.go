@@ -8,6 +8,7 @@ import (
 	"github.com/Away0x/7yue_api_server/model"
 	"github.com/Away0x/7yue_api_server/config"
 	"github.com/spf13/viper"
+	"github.com/Away0x/7yue_api_server/mock"
 )
 
 func main() {
@@ -28,7 +29,7 @@ func main() {
 	defer db.Close()
 
 	// 首次运行时可通过该方法添加一些 mock 数据
-	mockInit()
+	// mockInit()
 
 	router.Register(g)
 
@@ -39,16 +40,17 @@ func main() {
 // mock 数据
 func mockInit() {
 	// mock user
-	//mock.PushDataIntoUserTable()
+	mock.PushDataIntoUserTable()
 
 	// mock classic
-	//mock.PushDataIntoClassicTable()
+	mock.PushDataIntoClassicTable()
 
 	// mock book
-	//mock.PushDataIntoBookTable()
+	mock.PushDataIntoBookTable()
 
 	// mock book short comment
+	mock.PushDataIntoBookCommentTable()
 
 	// mock hot keyword
-	//mock.PushDataIntoHotKeyWordTable()
+	mock.PushDataIntoHotKeyWordTable()
 }

@@ -3,7 +3,7 @@
 # dev
 cd 7yue_api_server
 cp config/config.yaml.default config/config.yaml
-make install # 需要有 godep
+make install
 make dev
 
 # pro
