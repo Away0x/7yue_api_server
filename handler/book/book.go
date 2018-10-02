@@ -7,6 +7,7 @@ import (
 	"github.com/Away0x/7yue_api_server/constant/errno"
 	"github.com/Away0x/7yue_api_server/model"
 	"github.com/Away0x/7yue_api_server/constant"
+	"github.com/Away0x/7yue_api_server/crawler"
 )
 
 // @Summary 获取热门书籍(概要)
@@ -198,7 +199,18 @@ func ShortComment(c *gin.Context) {
 	})
 }
 
-// 书籍搜索
+// @Summary 书籍搜索
+// @Description 书籍搜索
+// @Tags Book
+// @Accept  json
+// @Produce  json
+// @Param appkey query string true "令牌: 测试可用 admin 或你自己的 appkey"
+// @Param q query string true "搜索内容,比如你想搜索python相关书籍,则输入python"
+// @Param summary query string false "返回完整或简介,默认为0,0为完整内容,1为简介"
+// @Param start query string false "开始记录数，默认为0"
+// @Param count query string false "记录条数，默认为20,超过依然按照20条计算"
+// @Success 200 {object} handler.Response
+// @Router /v1/book/search [get]
 func Search(c *gin.Context) {
 	// 1. 获取参数
 	start := c.DefaultQuery("start", "0")     // 开始记录数，默认为 0
@@ -206,24 +218,33 @@ func Search(c *gin.Context) {
 	summary := c.DefaultQuery("summary", "0") // 返回完整或简介,默认为 0，0 为完整内容，1 为简介
 	q := c.Query("q")                                     // 搜索内容，比如你想搜索 python 相关书籍，则输入 python
 
+	// 2. 调用 api
+	res := crawler.SearchBooks(summary, q, start, count)
+
 	// 2. 响应数据
-	handler.SendResponse(c, nil, gin.H{
-		"start": start,
-		"count": count,
-		"summary": summary,
-		"q": q,
-	})
+	handler.SendResponse(c, nil, res)
 }
 
-// 获取书籍详细信息
+// @Summary 通过 isbn 获取书籍详细信息
+// @Description 通过 isbn 获取书籍详细信息
+// @Tags Book
+// @Accept  json
+// @Produce  json
+// @Param appkey query string true "令牌: 测试可用 admin 或你自己的 appkey"
+// @Param isbn path string true "书籍的 isbn 号"
+// @Success 200 {object} handler.Response
+// @Router /v1/book/detail/{isbn} [get]
 func Detail(c *gin.Context) {
 	// 1. 参数验证
-	id, err := validate.NumberParamsValidate(c,"book_id")
-	if err != nil {
-		handler.SendResponse(c, err, nil)
+	isbn := c.Param("isbn")
+	if isbn == "" {
+		handler.SendResponse(c, errno.ParamsError, nil)
 		return
 	}
 
+	// 2. 调用 api
+	res := crawler.GetBookDetailByIsbn(isbn)
+
 	// 2. 响应数据
-	handler.SendResponse(c, nil, id)
+	handler.SendResponse(c, nil, res)
 }

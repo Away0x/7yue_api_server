@@ -48,6 +48,46 @@
                 }
             }
         },
+        "/v1/book/detail/{isbn}": {
+            "get": {
+                "description": "通过 isbn 获取书籍详细信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "summary": "通过 isbn 获取书籍详细信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "令牌: 测试可用 admin 或你自己的 appkey",
+                        "name": "appkey",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "书籍的 isbn 号",
+                        "name": "isbn",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/handler.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/book/favor/{book_id}": {
             "get": {
                 "description": "获取书籍点赞情况",
@@ -183,6 +223,64 @@
                             "items": {
                                 "$ref": "#/definitions/model.BookSerializer"
                             }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/book/search": {
+            "get": {
+                "description": "书籍搜索",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Book"
+                ],
+                "summary": "书籍搜索",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "令牌: 测试可用 admin 或你自己的 appkey",
+                        "name": "appkey",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "搜索内容,比如你想搜索python相关书籍,则输入python",
+                        "name": "q",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "返回完整或简介,默认为0,0为完整内容,1为简介",
+                        "name": "summary",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "开始记录数，默认为0",
+                        "name": "start",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "记录条数，默认为20,超过依然按照20条计算",
+                        "name": "count",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/handler.Response"
                         }
                     }
                 }
@@ -621,8 +719,8 @@
         "book.AddShortCommentBody": {
             "type": "object",
             "required": [
-                "content",
-                "book_id"
+                "book_id",
+                "content"
             ],
             "properties": {
                 "book_id": {

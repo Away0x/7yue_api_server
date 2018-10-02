@@ -26,7 +26,7 @@ func main() {
 		&model.HotKeyword{})
 	defer db.Close()
 
-	// mock
+	// 首次运行时可通过该方法添加一些 mock 数据
 	mockInit()
 
 	router.Register(g)

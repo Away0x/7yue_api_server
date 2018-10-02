@@ -6,8 +6,8 @@ definitions:
       content:
         type: string
     required:
-    - content
     - book_id
+    - content
     type: object
   handler.Response:
     properties:
@@ -117,6 +117,33 @@ paths:
       summary: 新增短评
       tags:
       - Book
+  /v1/book/detail/{isbn}:
+    get:
+      consumes:
+      - application/json
+      description: 通过 isbn 获取书籍详细信息
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 书籍的 isbn 号
+        in: path
+        name: isbn
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 通过 isbn 获取书籍详细信息
+      tags:
+      - Book
   /v1/book/favor/{book_id}:
     get:
       consumes:
@@ -208,6 +235,45 @@ paths:
               $ref: '#/definitions/model.BookSerializer'
             type: array
       summary: 获取热门书籍(概要)
+      tags:
+      - Book
+  /v1/book/search:
+    get:
+      consumes:
+      - application/json
+      description: 书籍搜索
+      parameters:
+      - description: '令牌: 测试可用 admin 或你自己的 appkey'
+        in: query
+        name: appkey
+        required: true
+        type: string
+      - description: 搜索内容,比如你想搜索python相关书籍,则输入python
+        in: query
+        name: q
+        required: true
+        type: string
+      - description: 返回完整或简介,默认为0,0为完整内容,1为简介
+        in: query
+        name: summary
+        type: string
+      - description: 开始记录数，默认为0
+        in: query
+        name: start
+        type: string
+      - description: 记录条数，默认为20,超过依然按照20条计算
+        in: query
+        name: count
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.Response'
+            type: object
+      summary: 书籍搜索
       tags:
       - Book
   /v1/book/short_comment/{book_id}:

@@ -77,7 +77,7 @@ func Register(g *gin.Engine) *gin.Engine {
 			// 书籍搜索
 			bookRouter.GET("/search", book.Search)
 			// 获取书籍详细信息
-			bookRouter.GET("/detail/:book_id", book.Detail)
+			bookRouter.GET("/detail/:isbn", book.Detail)
 		}
 
 		// 点赞
