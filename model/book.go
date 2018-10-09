@@ -8,6 +8,7 @@ type Book struct {
 	Author  string `gorm:"type:varchar(128);not null;column:author"`
 	Image   string `gorm:"type:varchar(128);not null;column:image"`
 	Title   string `gorm:"type:varchar(128);not null;column:title"`
+	Isbn    string `gorm:"type:varchar(128);not null;column:isbn;index:isbn"`
 }
 
 func (Book) TableName() string {
@@ -31,6 +32,7 @@ type BookSerializer struct {
 	Image      string `json:"image"`
 	LikeStatus int    `json:"like_status"`
 	Title      string `json:"title"`
+	Isbn       string `json:"isbn"`
 }
 
 func (b *Book) Serializer(like_status int, fav_nums int) BookSerializer {
@@ -41,6 +43,7 @@ func (b *Book) Serializer(like_status int, fav_nums int) BookSerializer {
 		Image: b.Image,
 		LikeStatus: like_status,
 		Title: b.Title,
+		Isbn: b.Isbn,
 	}
 
 	return s

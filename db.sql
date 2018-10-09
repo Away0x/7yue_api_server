@@ -31,8 +31,10 @@ CREATE TABLE `book` (
   `author` varchar(128) NOT NULL,
   `image` varchar(128) NOT NULL,
   `title` varchar(128) NOT NULL,
+  `isbn` varchar(128) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `idx_book_deleted_at` (`deleted_at`)
+  KEY `idx_book_deleted_at` (`deleted_at`),
+  KEY `isbn` (`isbn`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -42,7 +44,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (1,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,7,'[美]保罗·格雷厄姆','https://img3.doubanio.com/lpic/s4669554.jpg','黑客与画家'),(2,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,65,'MarkPilgrim','https://img3.doubanio.com/lpic/s4059293.jpg','Dive Into Python 3'),(3,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,183,'MagnusLieHetland','https://img3.doubanio.com/lpic/s4387251.jpg','Python基础教程'),(4,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1002,'[哥伦比亚]加西亚·马尔克斯','https://img3.doubanio.com/lpic/s6384944.jpg','百年孤独'),(5,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1049,'[日]岩井俊二','https://img1.doubanio.com/view/subject/l/public/s29775868.jpg','情书'),(6,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1061,'[美]乔治·R·R·马丁','https://img3.doubanio.com/lpic/s1358984.jpg','冰与火之歌（卷一）'),(7,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1120,'[日]东野圭吾','https://img3.doubanio.com/lpic/s4610502.jpg','白夜行'),(8,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1166,'金庸','https://img1.doubanio.com/lpic/s23632058.jpg','天龙八部'),(9,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1308,'[日]东野圭吾','https://img3.doubanio.com/lpic/s3814606.jpg','恶意'),(10,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1339,'[英]J·K·罗琳','https://img3.doubanio.com/lpic/s1074376.jpg','哈利·波特与阿兹卡班的囚徒'),(11,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1383,'韩寒','https://img1.doubanio.com/lpic/s3557848.jpg','他的国'),(12,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1398,'[英]J·K·罗琳','https://img1.doubanio.com/lpic/s2752367.jpg','哈利·波特与死亡圣器'),(13,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1560,'王小波','https://img1.doubanio.com/lpic/s3463069.jpg','三十而立'),(14,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,7821,'[伊朗]玛赞·莎塔碧','https://img3.doubanio.com/lpic/s6144591.jpg','我在伊朗长大'),(15,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,8854,'[日]村上春树','https://img1.doubanio.com/lpic/s29494718.jpg','远方的鼓声'),(16,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,8866,'三毛','https://img3.doubanio.com/lpic/s2393243.jpg','梦里花落知多少'),(17,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,15198,'韩寒','https://img1.doubanio.com/lpic/s1080179.jpg','像少年啦飞驰'),(18,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,15984,'鲁迅','https://img3.doubanio.com/lpic/s27970504.jpg','朝花夕拾'),(19,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,21050,'[日]井上雄彦','https://img3.doubanio.com/lpic/s2853431.jpg','灌篮高手31'),(20,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,51664,'[日]新井一二三','https://img3.doubanio.com/lpic/s29034294.jpg','东京时味记');
+INSERT INTO `book` VALUES (1,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,7,'[美]保罗·格雷厄姆','https://img3.doubanio.com/lpic/s4669554.jpg','黑客与画家','9787115249494'),(2,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,65,'MarkPilgrim','https://img3.doubanio.com/lpic/s4059293.jpg','Dive Into Python 3','9781430224150'),(3,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,183,'MagnusLieHetland','https://img3.doubanio.com/lpic/s4387251.jpg','Python基础教程','9787115230270'),(4,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1002,'[哥伦比亚]加西亚·马尔克斯','https://img3.doubanio.com/lpic/s6384944.jpg','百年孤独','9787544253994'),(5,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1049,'[日]岩井俊二','https://img1.doubanio.com/view/subject/l/public/s29775868.jpg','情书','9787201048161'),(6,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1061,'[美]乔治·R·R·马丁','https://img3.doubanio.com/lpic/s1358984.jpg','冰与火之歌（卷一）','9787536671256'),(7,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1120,'[日]东野圭吾','https://img3.doubanio.com/lpic/s4610502.jpg','白夜行','9787544242516'),(8,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1166,'金庸','https://img1.doubanio.com/lpic/s23632058.jpg','天龙八部','9787108006721'),(9,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1308,'[日]东野圭吾','https://img3.doubanio.com/lpic/s3814606.jpg','恶意','9787121224683'),(10,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1339,'[英]J·K·罗琳','https://img3.doubanio.com/lpic/s1074376.jpg','哈利·波特与阿兹卡班的囚徒','9787020033454'),(11,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1383,'韩寒','https://img1.doubanio.com/lpic/s3557848.jpg','他的国','9787807592099'),(12,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1398,'[英]J·K·罗琳','https://img1.doubanio.com/lpic/s2752367.jpg','哈利·波特与死亡圣器','9787020063659'),(13,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,1560,'王小波','https://img1.doubanio.com/lpic/s3463069.jpg','三十而立','9787545201475'),(14,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,7821,'[伊朗]玛赞·莎塔碧','https://img3.doubanio.com/lpic/s6144591.jpg','我在伊朗长大','9787108033215'),(15,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,8854,'[日]村上春树','https://img1.doubanio.com/lpic/s29494718.jpg','远方的鼓声','9787532754533'),(16,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,8866,'三毛','https://img3.doubanio.com/lpic/s2393243.jpg','梦里花落知多少','9787531325093'),(17,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,15198,'韩寒','https://img1.doubanio.com/lpic/s1080179.jpg','像少年啦飞驰','9787506322522'),(18,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,15984,'鲁迅','https://img3.doubanio.com/lpic/s27970504.jpg','朝花夕拾','9787533914196'),(19,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,21050,'[日]井上雄彦','https://img3.doubanio.com/lpic/s2853431.jpg','灌篮高手31','9787806649343'),(20,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,51664,'[日]新井一二三','https://img3.doubanio.com/lpic/s29034294.jpg','东京时味记','9787544762069');
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,7 +189,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `key` (`key`),
   KEY `idx_user_deleted_at` (`deleted_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -196,7 +198,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,'wutong','admin'),(2,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,'wutong1','admin1');
+INSERT INTO `user` VALUES (1,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,'admin1','admin1'),(2,'2018-10-01 11:32:22','2018-10-01 11:32:22',NULL,'admin2','admin2'),(11,'2018-10-02 07:40:26','2018-10-02 07:40:26',NULL,'cyj','$2a$10$HErYgwOmrv09z9Twy/z8wOF/2I5VrH2SxCEGq5yKZlqJOQ5D/LFKS');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -209,4 +211,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-02 14:11:41
+-- Dump completed on 2018-10-09 21:06:34
