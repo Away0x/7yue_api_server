@@ -1,19 +1,19 @@
 package model
 
 import (
-	"github.com/jinzhu/gorm"
-	"github.com/Away0x/7yue_api_server/constant/errno"
 	"github.com/Away0x/7yue_api_server/constant"
+	"github.com/Away0x/7yue_api_server/constant/errno"
+	"github.com/jinzhu/gorm"
 )
 
 type Classic struct {
 	gorm.Model
-	Content    string  `gorm:"type:varchar(255);not null;column:content"`
-	Image      string  `gorm:"type:varchar(128);not null;column:image"`
-	Url        string  `gorm:"type:varchar(128);not null;column:url"`
-	Index      int     `gorm:"type:integer;not null;column:index"`
-	Title      string  `gorm:"type:varchar(128);not null;column:title"`
-	Type       int     `gorm:"type:integer;not null;column:type"`
+	Content string `gorm:"type:varchar(255);not null;column:content"`
+	Image   string `gorm:"type:varchar(128);not null;column:image"`
+	Url     string `gorm:"type:varchar(128);not null;column:url"`
+	Index   int    `gorm:"type:integer;not null;column:index"`
+	Title   string `gorm:"type:varchar(128);not null;column:title"`
+	Type    int    `gorm:"type:integer;not null;column:type"`
 }
 
 func (Classic) TableName() string {
@@ -70,29 +70,30 @@ func GetFavorClassices(user_key string, page int, count int) ([]*Classic, error)
 }
 
 type ClassicSerializer struct {
-	Id         uint    `json:"id"`
-	Pubdate    string  `json:"pubdate"`
-	Content    string  `json:"content"`
-	FavNums    int     `json:"fav_nums"`
-	Image      string  `json:"image"`
-	Url        string  `json:"url"`
-	Index      int     `json:"index"`
-	LikeStatus int     `json:"like_status"`
-	Title      string  `json:"title"`
-	Type       int     `json:"type"`
+	Id         uint   `json:"id"`
+	Pubdate    string `json:"pubdate"`
+	Content    string `json:"content"`
+	FavNums    int    `json:"fav_nums"`
+	Image      string `json:"image"`
+	Url        string `json:"url"`
+	Index      int    `json:"index"`
+	LikeStatus int    `json:"like_status"`
+	Title      string `json:"title"`
+	Type       int    `json:"type"`
 }
 
 func (c *Classic) Serializer(path string, like_status int, fav_nums int) ClassicSerializer {
 	s := ClassicSerializer{
-		Id: c.ID,
-		Pubdate: c.CreatedAt.Format("2006-01-02"),
-		Content: c.Content,
-		FavNums: fav_nums,
-		Image: path + "/static/images/" + c.Image,
-		Index: c.Index,
+		Id:         c.ID,
+		Pubdate:    c.CreatedAt.Format("2006-01-02"),
+		Content:    c.Content,
+		FavNums:    fav_nums,
+		Image:      path + "/static/images/" + c.Image,
+		Url:        c.Url,
+		Index:      c.Index,
 		LikeStatus: like_status,
-		Title: c.Title,
-		Type: c.Type,
+		Title:      c.Title,
+		Type:       c.Type,
 	}
 
 	return s
