@@ -1,0 +1,5 @@
+/** page 是页面的标签，是小程序自动包装在页面上的  */
+page {
+  font-family: "PingFangSC-Thin";
+  font-size: 32rpx;
+}

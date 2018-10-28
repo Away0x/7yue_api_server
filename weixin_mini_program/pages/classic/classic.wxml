@@ -1,0 +1,28 @@
+<view class='container'>
+  <view class='header'>
+    <!-- 日期 -->
+    <v-episode class="episode" index="{{ currentClassic.index }}" />
+    <!-- 点赞 -->
+    <view class="like-container">
+      <v-like class="like" bind:like="onLike" like="{{ likeStatus }}"
+        count="{{ likeCount }}" />
+      <v-button class="share-btn" open-type="share">
+        <image class="share" slot="img" src="/images/icon/share.png" />
+      </v-button>
+    </view>
+  </view>
+
+  <!-- 电影 -->
+  <v-movie wx:if="{{ currentClassic.type === 100 }}" img="{{ currentClassic.image }}"
+    content="{{ currentClassic.content }}" />
+  <!-- 音乐 -->
+  <v-music wx:if="{{ currentClassic.type === 200 }}" img="{{ currentClassic.image }}"
+    content="{{ currentClassic.content }}" src="{{ currentClassic.url }}" />
+  <!-- 句子 -->
+  <v-essay wx:if="{{ currentClassic.type === 300 }}" img="{{ currentClassic.image }}"
+    content="{{ currentClassic.content }}" />
+
+  <!-- 期刊切换 -->
+  <v-navi class="navi" latest="{{ latest }}" first="{{ first }}" catch:left="onNext"  
+    catch:right="onPrevious" title="{{ currentClassic.title }}" />
+</view>

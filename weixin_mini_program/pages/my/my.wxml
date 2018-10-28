@@ -1,0 +1,33 @@
+<view class="container">
+    <image src="/images/my/my@bg.png" class="bg"></image>
+    <!-- open-data 不需要授权也可获取用户信息 type 为要获取的信息 -->
+    <!-- <open-data type="userAvatarUrl" class="avatar avatar-position"/> -->
+    <v-button wx:if="{{!authorized}}" open-type="getUserInfo" class="avatar-position" bind:getuserinfo="onGetUserInfo">
+        <image slot="img" class="avatar" src="/images/my/my.png" />
+    </v-button>
+    <!-- 登录 难点 服务器 微信支付 -->
+    <view wx:if="{{authorized}}" class="avatar-container avatar-position">
+        <image src="{{userInfo.avatarUrl}}" class="avatar" />
+        <text>{{userInfo.nickName}}</text>
+    </view>
+    <view class="about-container">
+        <view bind:tap="onJumpToAbout" class="about-us">
+            <image src="/images/my/about.png" />
+            <text class="description">关于我们</text>
+        </view>
+        <view class="about-us">
+            <text class="book-num">{{bookCount}}</text>
+            <text class="description">喜欢的书</text>
+        </view>
+    </view>
+
+    <view class="like-container">
+        <image class="headline" src="/images/my/like.png" />
+        <view class="preview-container">
+            <block wx:for="{{classics}}" wx:key="">
+                <v-preview bind:tapping="onJumpToDetail" class="preview" classic="{{item}}" />
+            </block>
+        </view>
+    </view>
+
+</view>
