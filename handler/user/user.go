@@ -3,10 +3,10 @@ package user
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"github.com/Away0x/7yue_api_server/handler"
+	"7yue_api_server/handler"
 	"golang.org/x/crypto/bcrypt"
-	"github.com/Away0x/7yue_api_server/model"
-	"github.com/Away0x/7yue_api_server/constant/errno"
+	"7yue_api_server/model"
+	"7yue_api_server/constant/errno"
 )
 
 // 首页

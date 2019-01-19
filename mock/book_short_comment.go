@@ -2,7 +2,7 @@ package mock
 
 import (
 	"fmt"
-	"github.com/Away0x/7yue_api_server/model"
+	"7yue_api_server/model"
 )
 
 func PushDataIntoBookCommentTable() {

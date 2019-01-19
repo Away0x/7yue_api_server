@@ -2,12 +2,12 @@ package book
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/Away0x/7yue_api_server/handler"
-	"github.com/Away0x/7yue_api_server/utils/validate"
-	"github.com/Away0x/7yue_api_server/constant/errno"
-	"github.com/Away0x/7yue_api_server/model"
-	"github.com/Away0x/7yue_api_server/constant"
-	"github.com/Away0x/7yue_api_server/crawler"
+	"7yue_api_server/handler"
+	"7yue_api_server/utils/validate"
+	"7yue_api_server/constant/errno"
+	"7yue_api_server/model"
+	"7yue_api_server/constant"
+	"7yue_api_server/crawler"
 )
 
 // @Summary 获取热门书籍(概要)

@@ -4,7 +4,7 @@ default:
 	env GOOS=linux GOARCH=amd64 go build -o ${APP_NAME}
 
 install:
-	godep restore
+	go mod download
 
 dev:
 	fresh -c config/dev.conf

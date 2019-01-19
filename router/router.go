@@ -1,18 +1,18 @@
 package router
 
 import (
-	_ "github.com/Away0x/7yue_api_server/docs"
+	_ "7yue_api_server/docs"
 	"github.com/gin-gonic/gin"
-	"github.com/Away0x/7yue_api_server/router/middleware"
-	"github.com/Away0x/7yue_api_server/handler/classic"
-	"github.com/Away0x/7yue_api_server/handler"
-	"github.com/Away0x/7yue_api_server/constant/errno"
-	"github.com/Away0x/7yue_api_server/handler/like"
-	"github.com/Away0x/7yue_api_server/handler/book"
+	"7yue_api_server/router/middleware"
+	"7yue_api_server/handler/classic"
+	"7yue_api_server/handler"
+	"7yue_api_server/constant/errno"
+	"7yue_api_server/handler/like"
+	"7yue_api_server/handler/book"
 	"github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
-	"github.com/Away0x/7yue_api_server/handler/user"
-	"github.com/Away0x/7yue_api_server/handler/sd"
+	"7yue_api_server/handler/user"
+	"7yue_api_server/handler/sd"
 )
 
 func Register(g *gin.Engine) *gin.Engine {
