@@ -1,16 +1,16 @@
 package crawler
 
 import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-	"strings"
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"strings"
 )
 
 const (
 	BOOK_SEARCH_API = "http://t.yushu.im/v2/book/search?summary=%s&q=%s&start=%s&count=%s"
-	BOOK_DETAIL_API = "https://api.douban.com/v2/book/isbn/%s"
+	BOOK_DETAIL_API = "http://t.yushu.im/v2/book/isbn/%s"
 )
 
 func SearchBooks(summary string, q string, start string, count string) interface{} {
@@ -60,18 +60,18 @@ func GetBookDetailByIsbn(isbn string) map[string]interface{} {
 	var j map[string]interface{}
 	json.Unmarshal([]byte(json_str), &j)
 
-	if j["isbn13"] == nil || j["isbn13"] == "" {
+	if j["isbn"] == nil || j["isbn"] == "" {
 		return nil
 	}
 
 	book := map[string]interface{}{
 		"author":     j["author"],
 		"binding":    j["binding"],
-		"category":   "",
+		"category":   j["category"],
 		"id":         j["id"],
 		"image":      j["image"],
 		"images":     j["images"],
-		"isbn":       j["isbn13"],
+		"isbn":       j["isbn"],
 		"pages":      j["pages"],
 		"price":      j["price"],
 		"pubdate":    j["pubdate"],
