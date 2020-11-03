@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	BOOK_SEARCH_API = "http://t.yushu.im/v2/book/search?summary=%s&q=%s&start=%s&count=%s"
-	BOOK_DETAIL_API = "http://t.yushu.im/v2/book/isbn/%s"
+	BOOK_SEARCH_API = "http://t.talelin.com/v2/book/search?summary=%s&q=%s&start=%s&count=%s"
+	BOOK_DETAIL_API = "http://t.talelin.com/v2/book/isbn/%s"
 )
 
 func SearchBooks(summary string, q string, start string, count string) interface{} {
